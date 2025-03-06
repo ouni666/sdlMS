@@ -6,7 +6,7 @@
 
 快速拉取本项目
 ```
-git clone --recurse-submodules https://github.com/PShocker/sdlMS.git --depth 1
+git clone --recurse-submodules https://github.com/ouni666/sdlMS.git.git --depth 1
 ```
 
 新建build目录
