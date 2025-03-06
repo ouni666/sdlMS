@@ -64,12 +64,15 @@ if(EMSCRIPTEN)
         )
 endif()
 
-# 在sdlms子项目的CMakeLists中确保安装目标 
-install(TARGETS sdlms 
-    RUNTIME DESTINATION bin 
-    LIBRARY DESTINATION lib 
-    ARCHIVE DESTINATION lib 
-)
+# 添加可执行文件 
+add_executable(sdlMS ${{CMAKE_CURRENT_SOURCE_DIR}}/main.cpp  ${{SOURCE_FILES}}) 
  
-# 创建必要的安装目录 
-install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/include/sdlms)
+# 链接库 
+target_link_libraries(sdlMS PRIVATE SDL3::SDL3) 
+target_link_libraries(sdlMS PRIVATE wzlib) 
+target_link_libraries(sdlMS PRIVATE freetype) 
+target_link_libraries(sdlMS PRIVATE EnTT) 
+target_link_libraries(sdlMS PRIVATE avformat avcodec avutil swscale swresample) 
+ 
+# 安装目标 
+install(TARGETS sdlMS DESTINATION bin) 
