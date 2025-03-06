@@ -1,3 +1,9 @@
+# 在顶层CMakeLists.txt 添加安装路径配置 
+if(NOT DEFINED CMAKE_INSTALL_PREFIX)
+    set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/PKGDIR" CACHE PATH "Install directory")
+endif()
+message(STATUS "Install path: ${CMAKE_INSTALL_PREFIX}")
+
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 include_directories("${CMAKE_SOURCE_DIR}/3rdparty/entt/src")
 include_directories("${CMAKE_SOURCE_DIR}/3rdparty/SDL/include")
@@ -57,3 +63,13 @@ if(EMSCRIPTEN)
                 RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
         )
 endif()
+
+# 在sdlms子项目的CMakeLists中确保安装目标 
+install(TARGETS sdlms 
+    RUNTIME DESTINATION bin 
+    LIBRARY DESTINATION lib 
+    ARCHIVE DESTINATION lib 
+)
+ 
+# 创建必要的安装目录 
+install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/include/sdlms)
