@@ -6,42 +6,29 @@ if(NOT DEFINED CMAKE_INSTALL_PREFIX)
 endif()
 message(STATUS "Install path: ${CMAKE_INSTALL_PREFIX}")
 
-project(sdlMS)
-
 set(CMAKE_CXX_STANDARD 23)
 
 # Add compile information for LSP
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(CMAKE_BUILD_TYPE MATCHES "Release|RelWithDebInfo")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        # 启用LTO需要配套设置 
-        include(CheckIPOSupported)
-        check_ipo_supported(RESULT ipo_supported)
-        if(ipo_supported)
-            set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
-        endif()
-        
-        # 跨平台优化参数调整 
-        if(NOT CMAKE_CROSSCOMPILING)
-            add_compile_options(-march=native)
-        else 
-            add_compile_options(-mtune=generic)
-        endif()
-        
-        # 符号剥离参数优化 
-        add_link_options("LINKER:-s")
+        # 启用lto -flto=auto
+        # 去掉调试符号
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto=auto")
+
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
+        # 对本机cpu生成特定优化代码,可能存在兼容性问题
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto=auto")
     endif()
 endif()
 
-# 确保子目录存在且包含有效CMakeLists 
-if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty AND 
-   EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/sdlms)
-    add_subdirectory(3rdparty)
-    add_subdirectory(sdlms)
-else()
-    message(FATAL_ERROR "Missing required subdirectories: 3rdparty/ and sdlms/")
-endif()
+add_subdirectory(3rdparty EXCLUDE_FROM_ALL)
+add_subdirectory(sdlms)
 
 # 在sdlms子项目的CMakeLists中确保安装目标 
 install(TARGETS sdlms 
