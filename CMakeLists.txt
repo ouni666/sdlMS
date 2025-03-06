@@ -15,9 +15,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
  
 # 安装路径安全验证 
 if(NOT DEFINED PKGDIR)
-    message(FATAL_ERROR "PKGDIR must be defined. Usage: cmake -DPKGDIR=/path/to/install")
-else()
-    message(STATUS "Installation prefix: ${PKGDIR}")
+    set(PKGDIR "/usr/local" CACHE PATH "Installation directory")
 endif()
  
 # 编译器通用选项配置 
