@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.28)
-project(sdlMS)
 
 # 在顶层CMakeLists.txt 添加安装路径配置 
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
     set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/PKGDIR" CACHE PATH "Install directory")
 endif()
 message(STATUS "Install path: ${CMAKE_INSTALL_PREFIX}")
+
+project(sdlMS)
 
 set(CMAKE_CXX_STANDARD 23)
 
