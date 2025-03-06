@@ -1,10 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-
-# 在顶层CMakeLists.txt 添加安装路径配置 
-if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-    set(CMAKE_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/PKGDIR" CACHE PATH "Install directory")
-endif()
-message(STATUS "Install path: ${CMAKE_INSTALL_PREFIX}")
+project(sdlMS)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -29,14 +24,3 @@ endif()
 
 add_subdirectory(3rdparty EXCLUDE_FROM_ALL)
 add_subdirectory(sdlms)
-
-# 在sdlms子项目的CMakeLists中确保安装目标 
-install(TARGETS sdlms 
-    RUNTIME DESTINATION bin 
-    LIBRARY DESTINATION lib 
-    ARCHIVE DESTINATION lib 
-)
- 
-# 创建必要的安装目录 
-install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/include/sdlms)
-
