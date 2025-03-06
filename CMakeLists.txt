@@ -6,10 +6,6 @@ set(CMAKE_CXX_STANDARD 23)
 # Add compile information for LSP
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(NOT DEFINED PKGDIR)
-    set(PKGDIR "/usr/local" CACHE PATH "Installation directory")
-endif()
-
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
         # 启用lto -flto=auto
@@ -23,6 +19,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto=auto")
     endif()
+endif()
+
+if(NOT DEFINED PKGDIR)
+    set(PKGDIR "/usr/local" CACHE PATH "Installation directory")
 endif()
 
 add_subdirectory(3rdparty EXCLUDE_FROM_ALL)
