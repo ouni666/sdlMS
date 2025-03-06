@@ -1,3 +1,4 @@
+自用 构建系统测试用  
 重构版本,使用[LLVM18](https://github.com/mstorsjo/llvm-mingw/releases/tag/20240619),[Ninja](https://github.com/ninja-build/ninja/releases),[Cmake3.28](https://cmake.org/download/)编译
 
 编译前先配置好环境变量
